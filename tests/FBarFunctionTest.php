@@ -9,21 +9,17 @@ class FBarFunctionTest extends TestCase
     /** @test */
     public function url_is_correct()
     {
-        $message = "My message";
-        $device = "my-device-id";
-
-    	$fbar = new \Eastwest\FBar\Push("My message", "my-device-id");
-
-        $this->assertSame($fbar->url(), "http://pusher.dev/api/v1/device/my-device-id/push");
+        $device = "my-test-device-id";
+    	$fbar = new \Eastwest\FBar\Push("My test message", $device);
+        $this->assertSame($fbar->url(), "http://pusher.dev/api/v1/device/{$device}/push");
     }
 
     /** @test */
     public function params_is_correct()
     {
-        $message = "My message";
-        $device = "my-device-id";
+        $message = "My test message";
 
-        $fbar = new \Eastwest\FBar\Push("My message", "my-device-id");
+        $fbar = new \Eastwest\FBar\Push($message, "my-device-id");
 
         $this->assertSame($fbar->parameters(), [
             'form_params' => [
@@ -37,10 +33,26 @@ class FBarFunctionTest extends TestCase
     */
     public function null_device_id_is_not_valid()
     {
-        $message = "My message";
-
         $fbar = new \Eastwest\FBar\Push("My message", null);
+    }
 
+    /** @test */
+    public function send_valid_device_id()
+    {
+        $fbar = new \Eastwest\FBar\Push("My message", "my-test-device-id");
+        $response = $fbar->sendRequest();
 
+        $this->assertSame($response->getStatusCode(), 200);
+    }
+
+    /** @test 
+     * @expectedException GuzzleHttp\Exception\ClientException
+     */
+    public function send_invalid_device_id()
+    {
+        $fbar = new \Eastwest\FBar\Push("My message", "my-invalid-id");
+        $response = $fbar->sendRequest();
+
+        $this->assertSame($response->getStatusCode(), 404);
     }
 }
