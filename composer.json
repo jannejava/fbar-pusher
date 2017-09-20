@@ -1,0 +1,30 @@
+{
+    "name": "eastwest/fbar",
+    "description": "Send push notifications to F-Bar",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "authors": [
+        {
+            "name": "Jan Östlund",
+            "email": "janne@eastwest.se"
+        }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Eastwest\\FBar\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eastwest\\FBar\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2",
+        "orchestra/testbench": "^3.5"
+    },
+    "minimum-stability": "stable"
+}
