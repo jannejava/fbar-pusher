@@ -26,5 +26,12 @@
         "phpunit/phpunit": "^6.2",
         "orchestra/testbench": "^3.5"
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eastwest\\FBar\\FBarServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "stable"
 }
