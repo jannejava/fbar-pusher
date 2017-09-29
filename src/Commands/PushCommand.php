@@ -21,10 +21,21 @@ class PushCommand extends Command
      */
     protected $description = 'Push a message to F-Bar';
 
+    /**
+     * Command signature
+     * @var string
+     */
     protected $signature = 'fbar:push {message} {--device=}';
 
+    /**
+     * Pusher instance
+     * @var Eastwest\FBar\Pusher
+     */
     protected $pusher;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -40,13 +51,9 @@ class PushCommand extends Command
         $pusher = new Push($this->argument('message'), $this->option('device'));
         try {
             $pusher->sendRequest();
-            //dd($this->arguments());
-            //dd($this->options());
         } catch (Exception $exception) {
             consoleOutput()->error("Push failed because: {$exception->getMessage()}.");
             return -1;
         }
-
     }
-
 }
