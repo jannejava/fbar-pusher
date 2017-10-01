@@ -55,4 +55,15 @@ class FBarFunctionTest extends TestCase
 
         $this->assertSame($response->getStatusCode(), 404);
     }
+
+    /** @test */
+    public function device_id_guard_is_reading_config()
+    {
+        $deviceId = "my-device-id";
+        config(['laravel-fbar.deviceId' => $deviceId]);
+
+        $fbar = new \Eastwest\FBar\Push("My message");
+
+        $this->assertSame($fbar->deviceId, $deviceId);
+    }
 }

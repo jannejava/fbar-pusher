@@ -13,6 +13,18 @@ class Push
     const BASE_URL = 'https://pusher.eastwest.se';
     
     /**
+     * Message to send to device
+     * @var String
+     */
+    public $message;
+
+    /**
+     * Device to send notification to
+     * @var String
+     */
+    public $deviceId;
+    
+    /**
      * Construct Push Notification
      * @param string $message  Message sent to client
      * @param string $deviceId Unique device ID for receiver
@@ -67,15 +79,16 @@ class Push
      */
     protected function guardAgaistNullDeviceId() 
     {
-        if($this->deviceId == null) {
-
-            $config = config('laravel-fbar');
-
-            if(!isset($config['deviceId']) || $config['deviceId'] == null) {
-                throw InvalidCommand::create('Device ID cannot be null'); 
-            }
-
-            $deviceId = $config['deviceId'];
+        if($this->deviceId != null) {
+            return;
         }
+
+        $config = config('laravel-fbar');
+
+        if(!isset($config['deviceId']) || $config['deviceId'] == null) {
+            throw InvalidCommand::create('Device ID cannot be null'); 
+        }
+
+        $this->deviceId = $config['deviceId'];
     }
 }
