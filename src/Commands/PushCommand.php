@@ -25,7 +25,7 @@ class PushCommand extends Command
      * Command signature
      * @var string
      */
-    protected $signature = 'fbar:push {message} {--device=}';
+    protected $signature = 'fbar:push {--message=} {--device=}';
 
     /**
      * Pusher instance
@@ -48,7 +48,13 @@ class PushCommand extends Command
      */
     public function handle()
     {
-        $pusher = new Push($this->argument('message'), $this->option('device'));
+        $message = $this->option('message');
+
+        if($message == null) {
+            $message = sprintf("%s deployed successfully", env('APP_NAME') ?? env('APP_URL'));
+        }
+        
+        $pusher = new Push($message, $this->option('device'));
         try {
             $pusher->sendRequest();
         } catch (Exception $exception) {

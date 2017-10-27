@@ -11,7 +11,7 @@ class FBarFunctionTest extends TestCase
     {
         $device = "my-test-device-id";
     	$fbar = new \Eastwest\FBar\Push("My test message", $device);
-        $this->assertSame($fbar->url(), "http://pusher.dev/api/v1/device/{$device}/push");
+        $this->assertSame($fbar->url(), "https://pusher.eastwest.se/api/v1/device/{$device}/push");
     }
 
     /** @test */
@@ -19,7 +19,7 @@ class FBarFunctionTest extends TestCase
     {
         $message = "My test message";
 
-        $fbar = new \Eastwest\FBar\Push($message, "my-device-id");
+        $fbar = new \Eastwest\FBar\Push($message, $this->getMyDevice());
 
         $this->assertSame($fbar->parameters(), [
             'form_params' => [
@@ -39,7 +39,16 @@ class FBarFunctionTest extends TestCase
     /** @test */
     public function send_valid_device_id()
     {
-        $fbar = new \Eastwest\FBar\Push("My message", "my-test-device-id");
+        $fbar = new \Eastwest\FBar\Push("My test message", $this->getMyDevice());
+        $response = $fbar->sendRequest();
+
+        $this->assertSame($response->getStatusCode(), 200);
+    }
+
+    /** @test */
+    public function send_valid_device_id_with_no_message()
+    {
+        $fbar = new \Eastwest\FBar\Push(null, $this->getMyDevice());
         $response = $fbar->sendRequest();
 
         $this->assertSame($response->getStatusCode(), 200);
@@ -66,4 +75,11 @@ class FBarFunctionTest extends TestCase
 
         $this->assertSame($fbar->deviceId, $deviceId);
     }
+
+    protected function getMyDevice() {
+        require(__DIR__ . '/../mydevice.php');
+
+        return $mydevice;
+    }
+
 }
