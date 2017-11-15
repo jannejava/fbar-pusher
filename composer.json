@@ -1,7 +1,9 @@
 {
     "name": "eastwest/fbar",
     "description": "Send push notifications to F-Bar",
+    "version": "1.0.0",
     "type": "library",
+    "homepage": "https://pusher.eastwest.se",
     "require": {
         "guzzlehttp/guzzle": "^6.3"
     },
