@@ -1,4 +1,9 @@
+
+
 # Push notifications for Laravel and F-Bar
+---
+
+![Laravel Forge Menubar](https://laravel-forge-menubar.com/assets/img/help/pusher/push-notification.png)
 
 A Laravel/PHP-composer module for easier sending push notifications direcly to F-Bar from your servers. Add this module and get a instant notification when a deployment is done.
 
